@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fruit Game</title>
+    <link rel="stylesheet" href="./FruitGame.css">
+</head>
+<body>
+<div class="container">
+  <div class="topbar">
+    <div class="title">Fruit Fall 🍎</div>
+    <div class="stats">
+      <div class="stat"><span class="icon">⭐</span> Score: <b id="score">0</b></div>
+      <div class="stat"><span class="icon">❤️</span> Lives: <b id="lives">5</b></div>
+      <div class="stat"><span class="icon">🔥</span> Combo: <b id="combo">0</b></div>
+      <div class="stat"><span class="icon">⏱</span> Time: <b id="time">--</b></div>
+      <div class="stat"><span class="icon">🏆</span> High: <b id="high">0</b></div>
+      <div class="stat"> Mode
+        <select id="mode">
+          <option value="infinite">Infinite</option>
+          <option value="timer">Timer</option>
+        </select>
+      </div>
+      <div class="stat"> Difficulty
+        <select id="difficulty">
+          <option value="easy">Easy</option>
+          <option value="medium">Medium</option>
+          <option value="hard">Hard</option>
+        </select>
+      </div>
+    </div>
+  </div>
+  <div id="game">
+    <div class="basket">🧺</div>
+    <div id="comboText" class="comboText"></div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div id="gameOverModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" aria-describedby="modalDesc">
+  <div class="modal-content">
+    <h2 id="modalTitle">Game Over</h2>
+    <p id="modalDesc">Your Score: <span id="finalScore">0</span></p>
+    <button id="tryAgainBtn" type="button">Try Again</button>
+  </div>
+</div>
+    <script>
+        /* =========================
+   GET ELEMENTS FROM HTML
+========================= */
+
+const game = document.getElementById("game");
+const basket = document.querySelector(".basket");
+
+const scoreEl = document.getElementById("score");
+const livesEl = document.getElementById("lives");
+const comboEl = document.getElementById("combo");
+const timeEl = document.getElementById("time");
+
+const modeSelect = document.getElementById("mode");
+const difficultySelect = document.getElementById("difficulty");
+
+const modal = document.getElementById("gameOverModal");
+const finalScore = document.getElementById("finalScore");
+const tryAgainBtn = document.getElementById("tryAgainBtn");
+
+const comboText = document.getElementById("comboText");
+const highEl = document.getElementById("high");
+
+
+/* =========================
+   GAME VARIABLES
+========================= */
+
+let score = 0; 
+let lives = 5;
+let combo = 0;
+
+let multiplier = 1;
+
+let spawnRate = 800;
+let baseSpeed = 2;
+
+let timer = null;
+let timeLeft = 60;
+
+
+/* =========================
+   HIGH SCORE (saved locally)
+========================= */
+
+let highScore = localStorage.getItem("fruitHigh");
+
+if(highScore === null){
+  highScore = 0;
+}
+
+highEl.textContent = highScore;
+
+
+/* =========================
+   FRUIT TYPES
+========================= */
+
+const fruits = ["🍎","🍊","🍌","🍓","🍇","🍑","🍍"];
+const bomb = "💣";
+
+
+/* =========================
+   DIFFICULTY SETTINGS
+========================= */
+
+function applyDifficulty(){
+
+  const difficulty = difficultySelect.value;
+
+  if(difficulty === "easy"){
+    spawnRate = 1000;
+    baseSpeed = 2;
+  }
+
+  if(difficulty === "medium"){
+    spawnRate = 800;
+    baseSpeed = 3;
+  }
+
+  if(difficulty === "hard"){
+    spawnRate = 600;
+    baseSpeed = 4;
+  }
+
+}
+
+difficultySelect.addEventListener("change", applyDifficulty);
+applyDifficulty();
+
+/* =========================
+   TIMER MODE
+========================= */
+
+modeSelect.addEventListener("change", function(){
+  if(modeSelect.value === "timer"){
+    startTimer();
+  }
+  else{
+    clearInterval(timer);
+    timeEl.textContent = "--";
+  }
+
+});
+
+
+function startTimer(){
+
+  clearInterval(timer);
+
+  timeLeft = 60;
+  timeEl.textContent = timeLeft;
+
+  timer = setInterval(function(){
+
+    timeLeft--;
+
+    timeEl.textContent = timeLeft;
+
+    if(timeLeft <= 0){
+      endGame();
+    }
+
+  },1000);
+
+}
+
+
+/* =========================
+   MOVE BASKET WITH MOUSE
+========================= */
+
+game.addEventListener("mousemove", function(e){
+
+  const rect = game.getBoundingClientRect();
+
+  const mouseX = e.clientX - rect.left;
+
+  basket.style.left = mouseX + "px";
+
+});
+
+
+/* =========================
+   CREATE FRUIT
+========================= */
+
+function spawnFruit(){
+
+  const fruit = document.createElement("div");
+  fruit.className = "fruit";
+
+  /* Decide fruit or bomb */
+
+  const random = Math.random();
+
+  if(random < 0.12){
+    fruit.textContent = bomb;
+    fruit.dataset.type = "bomb";
+  }
+  else{
+    const randomFruit = fruits[Math.floor(Math.random() * fruits.length)];
+    fruit.textContent = randomFruit;
+    fruit.dataset.type = "fruit";
+  }
+
+  /* Random position */
+
+  fruit.style.left = Math.random() * (game.clientWidth - 40) + "px";
+  fruit.style.top = "-40px";
+
+  game.appendChild(fruit);
+
+
+  /* Falling animation */
+
+  const speed = baseSpeed + Math.random() * 2;
+
+  function fall(){
+
+    let top = parseFloat(fruit.style.top);
+
+    top = top + speed;
+
+    fruit.style.top = top + "px";
+
+    checkCollision(fruit);
+
+    if(top <= game.clientHeight){
+      requestAnimationFrame(fall);
+    }
+    else{
+
+      /* Missed fruit */
+
+      if(fruit.dataset.type === "fruit"){
+        combo = 0;
+        multiplier = 1;
+        comboEl.textContent = combo;
+      }
+
+      fruit.remove();
+    }
+
+  }
+
+  requestAnimationFrame(fall);
+
+}
+
+
+/* =========================
+   COLLISION CHECK
+========================= */
+
+function checkCollision(fruit){
+
+  const fruitRect = fruit.getBoundingClientRect();
+  const basketRect = basket.getBoundingClientRect();
+
+  if(
+    fruitRect.bottom >= basketRect.top &&
+    fruitRect.left < basketRect.right &&
+    fruitRect.right > basketRect.left
+  ){
+
+    /* Bomb hit */
+
+    if(fruit.dataset.type === "bomb"){
+
+      explodeBomb(fruit);
+
+      lives--;
+
+      livesEl.textContent = lives;
+
+      combo = 0;
+      multiplier = 1;
+
+      comboEl.textContent = combo;
+
+    }
+
+    /* Fruit caught */
+
+    else{
+
+      combo++;
+
+      if(combo >= 10){
+        multiplier = 3;
+      }
+      else if(combo >= 5){
+        multiplier = 2;
+      }
+      else{
+        multiplier = 1;
+      }
+
+      score += multiplier;
+
+      scoreEl.textContent = score;
+
+      comboEl.textContent = combo;
+
+      showCombo();
+
+      spawnParticles(fruit);
+
+    }
+
+    fruit.remove();
+
+    if(lives <= 0){
+      endGame();
+    }
+
+  }
+
+}
+
+
+/* =========================
+   COMBO TEXT
+========================= */
+
+function showCombo(){
+
+  comboText.textContent = "COMBO x" + combo;
+
+  comboText.style.opacity = 1;
+
+  setTimeout(function(){
+
+    comboText.style.opacity = 0;
+
+  },500);
+
+}
+
+
+/* =========================
+   PARTICLE EFFECT
+========================= */
+
+function spawnParticles(fruit){
+
+  for(let i = 0; i < 6; i++){
+
+    const p = document.createElement("div");
+
+    p.className = "particle";
+
+    p.textContent = "✨";
+
+    p.style.left = fruit.style.left;
+    p.style.top = fruit.style.top;
+
+    game.appendChild(p);
+
+    setTimeout(function(){
+      p.remove();
+    },500);
+
+  }
+
+}
+
+
+/* =========================
+   BOMB EXPLOSION
+========================= */
+
+function explodeBomb(fruit){
+
+  const boom = document.createElement("div");
+
+  boom.className = "explosion";
+
+  boom.textContent = "💥";
+
+  boom.style.left = fruit.style.left;
+  boom.style.top = fruit.style.top;
+
+  game.appendChild(boom);
+
+  setTimeout(function(){
+    boom.remove();
+  },500);
+
+}
+
+
+/* =========================
+   END GAME
+========================= */
+
+function endGame(){
+
+  clearInterval(timer);
+
+  if(score > highScore){
+    localStorage.setItem("fruitHigh", score);
+  }
+
+  finalScore.textContent = score;
+
+  modal.classList.add("active");
+
+}
+
+
+/* =========================
+   RESTART GAME
+========================= */
+
+tryAgainBtn.addEventListener("click", function(){
+
+  score = 0;
+  lives = 5;
+  combo = 0;
+
+  multiplier = 1;
+
+  scoreEl.textContent = score;
+  livesEl.textContent = lives;
+  comboEl.textContent = combo;
+
+  modal.classList.remove("active");
+
+  document.querySelectorAll(".fruit").forEach(function(f){
+    f.remove();
+  });
+
+  applyDifficulty();
+
+  if(modeSelect.value === "timer"){
+    startTimer();
+  }
+
+});
+
+
+/* =========================
+   GAME LOOP
+========================= */
+
+setInterval(function(){
+
+  spawnFruit();
+
+}, spawnRate);
+    </script>
+</body>
+</html>

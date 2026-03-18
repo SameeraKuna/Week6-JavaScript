@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Basic Variables Display</title>
+  <style>
+    .info-box {
+      padding: 15px;
+      border: 2px solid #333;
+      width: 250px;
+      font-family: Arial, sans-serif;
+    }
+    .info-box p {
+      margin: 5px 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="info-box" id="userInfo"></div>
+
+  <script>
+    // Using different variable declarations
+    let name = "Kuna Sai Sameera";       // string
+    const age = 25;             // number
+    var city = "Bengaluru";     // string
+
+    // Insert into DOM
+    const userInfoDiv = document.getElementById("userInfo");
+    userInfoDiv.innerHTML = `
+      <p><strong>Name:</strong> ${name}</p>
+      <p><strong>Age:</strong> ${age}</p>
+      <p><strong>City:</strong> ${city}</p>
+    `;
+  </script>
+</body>
+</html>

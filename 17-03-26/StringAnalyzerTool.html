@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>String Analyzer Tool</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    .analyzer-box {
+      margin-top: 15px;
+      padding: 15px;
+      border: 2px solid #444;
+      width: 300px;
+      background-color: #f9f9f9;
+    }
+    .analyzer-box p {
+      margin: 6px 0;
+    }
+    input, button {
+      padding: 8px;
+      margin-top: 5px;
+    }
+    button {
+      cursor: pointer;
+      background-color: #444;
+      color: #fff;
+      border: none;
+    }
+    button:hover {
+      background-color: #666;
+    }
+  </style>
+</head>
+<body>
+  <h2>String Analyzer Tool</h2>
+  <input type="text" id="userInput" placeholder="Enter a string">
+  <button onclick="analyzeString()">Analyze</button>
+
+  <div class="analyzer-box" id="result"></div>
+
+  <script>
+    function analyzeString() {
+      const str = document.getElementById("userInput").value.trim();
+      if (!str) {
+        document.getElementById("result").innerHTML = "<p>Please enter a string.</p>";
+        return;
+      }
+
+      const length = str.length;
+      const uppercase = str.toUpperCase();
+      const lowercase = str.toLowerCase();
+      const firstThree = str.slice(0, 3);
+      const lastThree = str.slice(-3);
+      const firstChar = str.charAt(0);
+
+      document.getElementById("result").innerHTML = `
+        <p><strong>Length:</strong> ${length}</p>
+        <p><strong>Uppercase:</strong> ${uppercase}</p>
+        <p><strong>Lowercase:</strong> ${lowercase}</p>
+        <p><strong>First 3 letters:</strong> ${firstThree}</p>
+        <p><strong>Last 3 letters:</strong> ${lastThree}</p>
+        <p><strong>First character:</strong> ${firstChar}</p>
+      `;
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task 1</title>
+    <link rel="icon" type="image/x-icon" href="">
+    <style>
+        #box{
+            width:150px;
+            height:100px;
+            background-color: aqua;
+            text-align: center;
+            justify-self: center;
+            align-content: center;
+        }
+    </style>
+</head>
+<body>
+   <div id="box" title="hi">Over Me
+   </div>
+   <script>
+        const ele = document.getElementById("box");
+        function blue(){
+            ele.style.backgroundColor= "blue";
+            ele.textContent = "I'm in box"
+        }
+        ele.addEventListener("mouseenter", blue);
+        function green(){
+            ele.style.backgroundColor= "green";
+            ele.textContent = "I'm outside box"
+        }
+        ele.addEventListener("mouseleave", green);
+   </script> 
+</body>
+</html>
