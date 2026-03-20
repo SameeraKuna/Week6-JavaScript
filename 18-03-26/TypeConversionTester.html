@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Type Conversion Tester</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        input {
+            padding: 10px;
+            width: 250px;
+            font-size: 16px;
+        }
+        button {
+            margin: 10px;
+            padding: 10px 15px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        #result {
+            margin-top: 20px;
+            font-size: 18px;
+            color: #590202;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Type Conversion Tester</h2>
+
+    <input type="text" id="userInput" placeholder="Enter a value">
+
+    <br>
+
+    <button onclick="convertToNumber()">Convert to Number</button>
+    <button onclick="convertToString()">Convert to String</button>
+    <button onclick="convertToBoolean()">Convert to Boolean</button>
+
+    <div id="result"></div>
+
+    <script>
+        function convertToNumber() {
+            let input = document.getElementById("userInput").value;
+            let converted = Number(input);
+
+            document.getElementById("result").innerHTML =
+                "Converted Value: " + converted + "<br>" +
+                "Type: " + typeof converted;
+        }
+
+        function convertToString() {
+            let input = document.getElementById("userInput").value;
+            let converted = String(input);
+
+            document.getElementById("result").innerHTML =
+                "Converted Value: " + converted + "<br>" +
+                "Type: " + typeof converted;
+        }
+
+        function convertToBoolean() {
+            let input = document.getElementById("userInput").value;
+            let converted = Boolean(input);
+
+            document.getElementById("result").innerHTML =
+                "Converted Value: " + converted + "<br>" +
+                "Type: " + typeof converted;
+        }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Logical Access System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 60px;
+        }
+        .container {
+            display: inline-block;
+            text-align: left;
+            margin-top: 20px;
+        }
+        label {
+            display: block;
+            margin: 8px 0;
+            font-size: 16px;
+        }
+        button {
+            margin-top: 15px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        #result {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Logical Access System</h2>
+
+    <div class="container">
+        <label><input type="checkbox" id="loggedIn"> Logged In</label>
+        <label><input type="checkbox" id="verified"> Verified</label>
+        <label><input type="checkbox" id="notBanned"> Not Banned</label>
+
+        <button onclick="checkAccess()">Check Access</button>
+    </div>
+
+    <div id="result"></div>
+
+    <script>
+        function checkAccess() {
+            const isLoggedIn = document.getElementById("loggedIn").checked;
+            const isVerified = document.getElementById("verified").checked;
+            const isNotBanned = document.getElementById("notBanned").checked;
+
+            const result = document.getElementById("result");
+
+            // Main condition: must satisfy all
+            if (isLoggedIn && isVerified && isNotBanned) {
+                showResult("✅ Access Granted", "green");
+            }
+            // Using OR (||): partial access message
+            else if (isLoggedIn || isVerified) {
+                showResult("⚠️ Partial Access: Complete all requirements", "orange");
+            }
+            // Using NOT (!): banned case
+            else if (!isNotBanned) {
+                showResult("❌ Access Denied: User is banned", "red");
+            }
+            // Default case
+            else {
+                showResult("❌ Access Denied", "red");
+            }
+        }
+
+        function showResult(message, color) {
+            const result = document.getElementById("result");
+            result.textContent = message;
+            result.style.color = color;
+        }
+    </script>
+
+</body>
+</html>

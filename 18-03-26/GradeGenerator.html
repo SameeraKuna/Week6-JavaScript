@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Grade Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 60px;
+        }
+        input {
+            padding: 10px;
+            width: 200px;
+            font-size: 16px;
+        }
+        button {
+            margin-top: 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        #result {
+            margin-top: 20px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Grade Generator</h2>
+
+    <input type="number" id="marks" placeholder="Enter marks (0-100)">
+    <br>
+    <button onclick="generateGrade()">Get Grade</button>
+
+    <div id="result"></div>
+
+    <script>
+        function generateGrade() {
+            let marks = document.getElementById("marks").value.trim();
+            let result = document.getElementById("result");
+
+            // Convert to number
+            marks = Number(marks);
+
+            // Validation
+            if (isNaN(marks) || marks < 0 || marks > 100) {
+                showResult("Please enter valid marks between 0 and 100!", "red");
+                return;
+            }
+
+            let grade = "";
+
+            // Grade logic
+            if (marks >= 90) {
+                grade = "A";
+            } else if (marks >= 80) {
+                grade = "B";
+            } else if (marks >= 70) {
+                grade = "C";
+            } else if (marks >= 60) {
+                grade = "D";
+            } else if (marks >= 50) {
+                grade = "E";
+            } else {
+                grade = "Fail";
+            }
+
+            showResult("Your Grade: " + grade, "blue");
+        }
+
+        function showResult(message, color) {
+            let result = document.getElementById("result");
+            result.textContent = message;
+            result.style.color = color;
+        }
+    </script>
+
+</body>
+</html>

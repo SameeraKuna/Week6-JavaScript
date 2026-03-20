@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login Validation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 60px;
+        }
+        input {
+            display: block;
+            margin: 10px auto;
+            padding: 10px;
+            width: 250px;
+            font-size: 16px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        #message {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Login Form</h2>
+
+    <input type="text" id="username" placeholder="Enter Username">
+    <input type="password" id="password" placeholder="Enter Password">
+
+    <button onclick="validateLogin()">Login</button>
+
+    <div id="message"></div>
+
+    <script>
+        function validateLogin() {
+            let user = document.getElementById("username").value.trim();
+            let pass = document.getElementById("password").value.trim();
+
+            const correctUsername = "Sameera";
+            const correctPassword = "1234";
+
+            const message = document.getElementById("message");
+
+            // Empty checks
+            if (user === "" && pass === "") {
+                showMessage("Username and Password cannot be empty!", "red");
+            } 
+            else if (user === "") {
+                showMessage("Username cannot be empty!", "red");
+            } 
+            else if (pass === "") {
+                showMessage("Password cannot be empty!", "red");
+            } 
+            // Credential check
+            else if (user === correctUsername && pass === correctPassword) {
+                showMessage("Login Successful!", "green");
+            } 
+            else {
+                showMessage("Invalid Username or Password!", "red");
+            }
+        }
+
+        function showMessage(msg, color) {
+            const message = document.getElementById("message");
+            message.textContent = msg;
+            message.style.color = color;
+        }
+    </script>
+
+</body>
+</html>
