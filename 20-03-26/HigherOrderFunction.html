@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Higher-Order Function</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 60px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        #output {
+            margin-top: 20px;
+            font-size: 18px;
+            white-space: pre-line;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Higher-Order Function Demo</h2>
+
+    <button onclick="runRepeat()">Repeat Hello 5 Times</button>
+
+    <div id="output"></div>
+
+    <script>
+        // Higher-order function
+        function repeat(fn, times) {
+            let result = "";
+            for (let i = 0; i < times; i++) {
+                result += fn() + "\n";
+            }
+            return result;
+        }
+
+        // Function to pass
+        function sayHello() {
+            return "Hello";
+        }
+
+        function runRepeat() {
+            const output = repeat(sayHello, 5);
+            document.getElementById("output").textContent = output;
+        }
+    </script>
+
+</body>
+</html>

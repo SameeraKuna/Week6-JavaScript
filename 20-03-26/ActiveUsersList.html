@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Active Users List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        table {
+            margin: 0 auto;
+            border-collapse: collapse;
+            width: 60%;
+        }
+        th, td {
+            border: 1px solid #333;
+            padding: 10px;
+            text-align: center;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Active Users List</h2>
+
+    <button onclick="showActiveUsers()">Show Active Users</button>
+
+    <table id="usersTable">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Active Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Users will appear here -->
+        </tbody>
+    </table>
+
+    <script>
+        const users = [
+            { name: "Sameera", email: "sam@example.com", isActive: true },
+            { name: "Giri", email: "giri@example.com", isActive: false },
+            { name: "Vishu", email: "vishu@example.com", isActive: true },
+            { name: "Hari", email: "hari@example.com", isActive: false },
+            { name: "Karuna", email: "karuna@example.com", isActive: true }
+        ];
+
+        const tbody = document.getElementById("usersTable").querySelector("tbody");
+
+        function showActiveUsers() {
+            // Clear existing rows
+            tbody.innerHTML = "";
+
+            // Filter active users
+            const activeUsers = users.filter(user => user.isActive);
+
+            // Populate table
+            activeUsers.forEach(user => {
+                const tr = document.createElement("tr");
+                tr.innerHTML = `
+                    <td>${user.name}</td>
+                    <td>${user.email}</td>
+                    <td>${user.isActive ? "Active" : "Inactive"}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+    </script>
+
+</body>
+</html>

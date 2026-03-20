@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Pattern Printer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 60px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        pre {
+            margin-top: 20px;
+            font-size: 20px;
+            text-align: left;
+            display: inline-block; 
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Pattern Printer</h2>
+    <pre id="output"></pre> <br/>
+    <button onclick="printPattern()">Print Pattern</button>
+
+    <script>
+        function printPattern() {
+            let pattern = "";
+
+            // Loop to build pattern
+            for (let i = 1; i <= 4; i++) {
+                for (let j = 1; j <= i; j++) {
+                    pattern += "*";
+                }
+                pattern += "\n";
+            }
+
+            document.getElementById("output").textContent = pattern;
+        }
+    </script>
+
+</body>
+</html>

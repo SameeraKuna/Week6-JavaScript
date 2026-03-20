@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Fruit Price Finder</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 60px;
+        }
+        select {
+            padding: 10px;
+            font-size: 16px;
+            width: 200px;
+        }
+        button {
+            margin-top: 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        #result {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Fruit Price Finder</h2>
+
+    <select id="fruit">
+        <option value="">-- Select a Fruit --</option>
+        <option value="apple">Apple</option>
+        <option value="banana">Banana</option>
+        <option value="mango">Mango</option>
+        <option value="orange">Orange</option>
+        <option value="grapes">Grapes</option>
+    </select>
+
+    <br>
+    <button onclick="findPrice()">Get Price</button>
+
+    <div id="result"></div>
+
+    <script>
+        function findPrice() {
+            const fruit = document.getElementById("fruit").value;
+            let price = "";
+            const result = document.getElementById("result");
+
+            switch (fruit) {
+                case "apple":
+                    price = "₹120 per kg";
+                    break;
+                case "banana":
+                    price = "₹60 per dozen";
+                    break;
+                case "mango":
+                    price = "₹150 per kg";
+                    break;
+                case "orange":
+                    price = "₹80 per kg";
+                    break;
+                case "grapes":
+                    price = "₹90 per kg";
+                    break;
+                case "":
+                    showResult("Please select a fruit!", "red");
+                    return;
+                default:
+                    showResult("Price not available", "red");
+                    return;
+            }
+
+            showResult("Price of " + fruit + ": " + price, "green");
+        }
+
+        function showResult(message, color) {
+            const result = document.getElementById("result");
+            result.textContent = message;
+            result.style.color = color;
+        }
+    </script>
+
+</body>
+</html>

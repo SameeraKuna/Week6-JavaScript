@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User Object with Methods</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        button {
+            margin: 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        #status {
+            margin-top: 20px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>User Object Demo</h2>
+
+    <button onclick="user.login()">Login</button>
+    <button onclick="user.logout()">Logout</button>
+
+    <div id="status">Status: Logged Out</div>
+
+    <script>
+        const user = {
+            name: "John Doe",
+            isLoggedIn: false,
+
+            login: function() {
+                this.isLoggedIn = true;
+                this.updateStatus();
+            },
+
+            logout: function() {
+                this.isLoggedIn = false;
+                this.updateStatus();
+            },
+
+            updateStatus: function() {
+                const statusDiv = document.getElementById("status");
+                statusDiv.textContent = "Status: " + (this.isLoggedIn ? "Logged In" : "Logged Out");
+            }
+        };
+    </script>
+
+</body>
+</html>

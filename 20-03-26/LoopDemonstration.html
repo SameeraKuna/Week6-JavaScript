@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Loop Demonstration</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 60px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        #output {
+            margin-top: 20px;
+            font-size: 18px;
+            white-space: pre-line;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Loop Demonstration</h2>
+
+    <button onclick="showMultiples()">Show Multiples of 5</button>
+
+    <div id="output"></div>
+
+    <script>
+        function showMultiples() {
+            let result = "";
+            let i = 1;
+
+            // Using while loop from 1 to 50
+            while (i <= 50) {
+
+                // Skip 25 using continue
+                if (i === 25) {
+                    i++;
+                    continue;
+                }
+
+                // Stop loop if exceeds 50 (demonstrating break)
+                if (i > 50) {
+                    break;
+                }
+
+                // Check multiples of 5
+                if (i % 5 === 0) {
+                    result += i + "\n";
+                }
+
+                i++;
+            }
+
+            document.getElementById("output").textContent = result;
+        }
+    </script>
+
+</body>
+</html>

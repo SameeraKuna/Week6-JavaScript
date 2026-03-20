@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cart Price Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        table {
+            margin: 0 auto;
+            border-collapse: collapse;
+            width: 60%;
+        }
+        th, td {
+            border: 1px solid #333;
+            padding: 10px;
+            text-align: center;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        #total {
+            margin-top: 20px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Cart Price Calculator</h2>
+
+    <table id="cartTable">
+        <thead>
+            <tr>
+                <th>Item</th>
+                <th>Price (₹)</th>
+                <th>Quantity</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Items will be injected here -->
+        </tbody>
+    </table>
+
+    <button onclick="calculateTotal()">Calculate Total</button>
+
+    <div id="total"></div>
+
+    <script>
+        const cart = [
+            { name: "Apple", price: 120, qty: 2 },
+            { name: "Banana", price: 60, qty: 3 },
+            { name: "Mango", price: 150, qty: 1 },
+            { name: "Orange", price: 80, qty: 4 }
+        ];
+
+        const tbody = document.getElementById("cartTable").querySelector("tbody");
+
+        // Render cart items
+        cart.forEach(item => {
+            const tr = document.createElement("tr");
+            tr.innerHTML = `
+                <td>${item.name}</td>
+                <td>${item.price}</td>
+                <td>${item.qty}</td>
+            `;
+            tbody.appendChild(tr);
+        });
+
+        function calculateTotal() {
+            const total = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
+            document.getElementById("total").textContent = "Total Amount: ₹" + total;
+        }
+    </script>
+
+</body>
+</html>

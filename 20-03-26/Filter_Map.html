@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Filter & Map Task</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 10px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .output {
+            margin-top: 20px;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Filter & Map</h2>
+
+    <button onclick="showEven()">Show Even Numbers</button>
+    <button onclick="showSquares()">Show Squared Numbers</button>
+
+    <div class="output" id="evenOutput"></div>
+    <div class="output" id="squareOutput"></div>
+
+    <script>
+        const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+
+        // Show even numbers
+        function showEven() {
+            const evens = numbers.filter(num => num % 2 === 0);
+            document.getElementById("evenOutput").textContent = 
+                "Even Numbers: " + evens.join(", ");
+        }
+
+        // Show squared numbers
+        function showSquares() {
+            const squares = numbers.map(num => num * num);
+            document.getElementById("squareOutput").textContent = 
+                "Squared Numbers: " + squares.join(", ");
+        }
+    </script>
+
+</body>
+</html>

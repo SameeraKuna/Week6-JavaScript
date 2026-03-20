@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Array CRUD Playground</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        input {
+            padding: 10px;
+            width: 200px;
+            font-size: 16px;
+        }
+        button {
+            margin: 5px;
+            padding: 8px 12px;
+            cursor: pointer;
+        }
+        ul {
+            margin-top: 20px;
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            padding: 5px;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Array CRUD Playground</h2>
+
+    <input type="text" id="itemInput" placeholder="Enter item">
+    <br>
+
+    <!-- Create -->
+    <button onclick="addItem()">Add (push)</button>
+    <button onclick="addFirst()">Add First (unshift)</button>
+
+    <!-- Delete -->
+    <button onclick="removeLast()">Remove Last (pop)</button>
+    <button onclick="removeFirst()">Remove First (shift)</button>
+
+    <!-- Update -->
+    <button onclick="updateItem()">Update (splice)</button>
+
+    <ul id="list"></ul>
+
+    <script>
+        let items = [];
+
+        function renderList() {
+            const list = document.getElementById("list");
+            list.innerHTML = "";
+
+            items.forEach((item, index) => {
+                const li = document.createElement("li");
+                li.textContent = index + ": " + item;
+                list.appendChild(li);
+            });
+        }
+
+        // CREATE - push
+        function addItem() {
+            const input = document.getElementById("itemInput").value.trim();
+            if (input !== "") {
+                items.push(input);
+                renderList();
+            }
+        }
+
+        // CREATE - unshift
+        function addFirst() {
+            const input = document.getElementById("itemInput").value.trim();
+            if (input !== "") {
+                items.unshift(input);
+                renderList();
+            }
+        }
+
+        // DELETE - pop
+        function removeLast() {
+            items.pop();
+            renderList();
+        }
+
+        // DELETE - shift
+        function removeFirst() {
+            items.shift();
+            renderList();
+        }
+
+        // UPDATE - splice
+        function updateItem() {
+            const index = prompt("Enter index to update:");
+            const newValue = prompt("Enter new value:");
+
+            if (index !== null && newValue !== null) {
+                const i = Number(index);
+                if (!isNaN(i) && i >= 0 && i < items.length) {
+                    items.splice(i, 1, newValue);
+                    renderList();
+                } else {
+                    alert("Invalid index!");
+                }
+            }
+        }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Function Types Demo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        button {
+            margin: 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        #output {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            white-space: pre-line;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Function Types Demo</h2>
+
+    <button onclick="runNormalFunction()">Normal Function</button>
+    <button onclick="runArrowFunction()">Arrow Function</button>
+    <button onclick="runIIFE()">IIFE</button>
+    <button onclick="runCallbackFunction()">Callback Function</button>
+
+    <div id="output"></div>
+
+    <script>
+        const outputDiv = document.getElementById("output");
+
+        // 1️⃣ Normal Function
+        function normalFunction() {
+            return "Hello from Normal Function!";
+        }
+        function runNormalFunction() {
+            outputDiv.textContent = normalFunction();
+        }
+
+        // 2️⃣ Arrow Function
+        const arrowFunction = () => "Hello from Arrow Function!";
+        function runArrowFunction() {
+            outputDiv.textContent = arrowFunction();
+        }
+
+        // 3️⃣ IIFE (Immediately Invoked Function Expression)
+        function runIIFE() {
+            const message = (function() {
+                return "Hello from IIFE!";
+            })();
+            outputDiv.textContent = message;
+        }
+
+        // 4️⃣ Callback Function
+        function callbackFunctionExample(callback) {
+            const msg = "Hello from Callback Function!";
+            callback(msg);
+        }
+        function runCallbackFunction() {
+            callbackFunctionExample(function(message){
+                outputDiv.textContent = message;
+            });
+        }
+    </script>
+
+</body>
+</html>
